@@ -57,5 +57,25 @@
     }
     body {
       @apply bg-background text-foreground;
+
     }
   }
+
+
+@layer components {
+  .parent-li > * {
+    @apply flex gap-1.5 items-center text-left
+  }
+
+  .check-icon {
+    @apply w-5 h-5 text-green-600 shrink-0
+  }
+
+  .user-img > * {
+    @apply  inline-block h-10 w-10 rounded-full ring-2 ring-slate-100
+  }
+
+  .star-icon > * {
+    @apply h-4 w-4 text-green-600 fill-green-600
+  }
+}

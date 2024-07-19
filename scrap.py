@@ -31,7 +31,7 @@ for anchor in anchor_tags:
 
 for link in links:
     title,href = link
-    img = requests.get(f"https://github.com/{href}")
+    img = requests.get(f"https://github.com/{href}?raw=true") # raw=true->github
 
     with open(f"./public/{title}",'wb') as file:
         file.write(img.content)
@@ -84,7 +84,7 @@ for directory in directories:
 
     for link in link_set:
         link_title,href = link
-        img = requests.get(f'https://github.com/{href}')
+        img = requests.get(f'https://github.com/{href}?raw=true')
 
         with open(f"./public/{title}/{link_title}",'wb') as file:
             file.write(img.content)
