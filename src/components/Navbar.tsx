@@ -8,7 +8,7 @@ const Navbar = ()=> {
     const user = false
     const isAdmin = true
     return (
-        <nav className="sticky inset-x-0 top-0 z-1000 h-14 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all">
+        <nav className="sticky inset-x-0 top-0 z-[100] h-14 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all">
             <MaxWidthWrapper>
             <div className='h-14 flex items-center justify-between border-b border-zinc-200'>
                 <Link className='flex z-40 font-semibold' href="/">case
