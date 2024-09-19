@@ -104,8 +104,7 @@ export default function Home(props:any) {
               <img src="/snake-2.png" className="w-24 order-0 lg:order-2" alt="" />
           </div>
 
-           <div className="mx-auto grid max-w-2xl grid-cols-1 px-4 lg:mx-0 lg:max-w-none gap-y-16 lg:grid-cols-2"> {/*clasname missing */}
-
+           <div className="mx-auto grid max-w-2xl grid-cols-1 px-4 lg:mx-0 lg:max-w-none gap-y-16 lg:grid-cols-2">
             {/* First customer review */}
             <div className="flex flex-auto flex-col gap-4 lg:pr-8 xl:pr-20">
               <div className="flex gap-0.5 mb-2">
@@ -147,7 +146,6 @@ export default function Home(props:any) {
               </div>
               </div>
             </div>
-
           </div>
         </MaxWidthWrapper>
 
