@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from "react"
+import { HTMLAttributes, useEffect, useRef, useState } from "react"
 import MaxWidthWrapper from "./MaxWidthWrapper"
 import { useInView } from "framer-motion"
 import IPhone from "./IPhone"
@@ -28,7 +28,7 @@ function SplitArray(arr:Array<string>,no_of_cols:number){
 }
 
 
-function Review({imgSrc}:{imgSrc:string}){
+function Review({imgSrc,className}:{imgSrc:string,className?:string}){
     const POSSIBLE_ANIMATION_DELAYS = [
         '0s',
         '0.1s',
@@ -41,7 +41,7 @@ function Review({imgSrc}:{imgSrc:string}){
       const animation_delay = POSSIBLE_ANIMATION_DELAYS[Math.floor(Math.random()*POSSIBLE_ANIMATION_DELAYS.length)]
     return (
         <div 
-        className="animate-fade-in rounded-[2.25rem] bg-white shadow-xl opacity-0 shadow-slate-900/5"
+        className={cn("animate-fade-in rounded-[2.25rem] p-6 bg-white shadow-xl opacity-0 shadow-slate-900/5",className)}
         style={{animationDelay: animation_delay}}
         >
             <IPhone imgSrc={imgSrc}/>
@@ -59,17 +59,15 @@ function ReviewColumn({reviews,className,reviewClassName,msPerPixel=0}:{reviews:
         if (!columnRef.current) return 
         const resizeObserver = new window.ResizeObserver(()=>{
             setColumnHeight(columnRef.current?.offsetHeight ?? 0)
-            // console.log('column height: ',columnHeight)
         })
         resizeObserver.observe(columnRef.current)
-        // console.log('column height observer',columnHeight)
 
         return ()=>{
             resizeObserver.disconnect()
         }
     },[])
-    // console.log('after col height',columnHeight)
 
+    
     return (
         <div
         ref={columnRef}
@@ -80,6 +78,7 @@ function ReviewColumn({reviews,className,reviewClassName,msPerPixel=0}:{reviews:
             reviews.concat(reviews).map((img_src:any,index:number)=>(
             <Review
             key={index}
+            className={reviewClassName?.(index%reviews.length)}
             imgSrc={img_src}/>
         ))
         }
@@ -102,12 +101,20 @@ function ReviewGrid(){
                 <>
                 <ReviewColumn
                     reviews = {[...column1,...column3.flat(),...column2]}
-                    reviewClassName={(reviewIndex)=>cn('jkfdls')}
+                    reviewClassName={(reviewIndex)=>cn(
+                        {
+                            'md:hidden': reviewIndex >= column1.length + column3[0].length,
+                            'lg:hidden': reviewIndex >= column1.length
+                        }
+                    )}
                     msPerPixel={10}
                  />
                 <ReviewColumn
                     reviews = {[...column2,...column3[1]]}
                     className='hidden md:block'
+                    reviewClassName={(reviewIndex)=>
+                        reviewIndex >= column2.length ? 'lg:hidden' : ''
+                    }
                     msPerPixel={10}
                  />
                 <ReviewColumn
