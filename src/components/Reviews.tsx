@@ -38,7 +38,7 @@ function Review({imgSrc,className}:{imgSrc:string,className?:string}){
         '0.5s',
       ]
 
-      const animation_delay = POSSIBLE_ANIMATION_DELAYS[Math.floor(Math.random()*POSSIBLE_ANIMATION_DELAYS.length)]
+  const animation_delay = POSSIBLE_ANIMATION_DELAYS[Math.floor(Math.random()*POSSIBLE_ANIMATION_DELAYS.length)]
     return (
         <div 
         className={cn("animate-fade-in rounded-[2.25rem] p-6 bg-white shadow-xl opacity-0 shadow-slate-900/5",className)}
@@ -115,7 +115,7 @@ function ReviewGrid(){
                     reviewClassName={(reviewIndex)=>
                         reviewIndex >= column2.length ? 'lg:hidden' : ''
                     }
-                    msPerPixel={10}
+                    msPerPixel={15}
                  />
                 <ReviewColumn
                     reviews = {[...column3.flat()]}
