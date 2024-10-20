@@ -2,23 +2,33 @@
 
 import { cn } from "@/lib/utils"
 import { Progress } from "@/components/ui/progress"
-import { Image, Loader2, MousePointerSquareDashed } from "lucide-react"
+import { Image as LucidImg,Loader2, MousePointerSquareDashed } from "lucide-react"
 import { useState, useTransition } from "react"
 import Dropzone,{FileRejection} from "react-dropzone"
 import { uploadFile_to_server } from "@/app/actions/s3_server"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
+import {v4 as uuidv4} from 'uuid'
+import { post_img } from "@/app/actions/prisma_client"
 
 
+interface upload_status {
+    status:number,
+    url:string | undefined,
+    error:string | undefined
+}
 
 
 export default function Upload(){
+
     const [isDragOver,setIsDragOver] = useState<boolean>(false)
     const [uploadProgress,setUploadProgress] = useState<number>(0)
     const [isPending,startTransition] = useTransition() 
     const [isUploading,setIsUploading] = useState(false)
+    const [upload_result,setUploadResult] = useState<upload_status | undefined>(undefined)
     const {toast} = useToast()
     const router = useRouter()
+    const [check,setCheck] = useState<number>(0)
 
 
     const onDropRejected = (rejectedFiles:FileRejection[])=>{
@@ -37,39 +47,67 @@ export default function Upload(){
 
     const uploadFile = async(file:File)=>{
         const reader = new FileReader();
+        const my_img = new Image()
+        const configId = uuidv4()
+
+
         reader.onload = async(e: ProgressEvent<FileReader>)=>{
             const fileData = e.target?.result as string
+            my_img.src = fileData
+            setIsUploading(true) 
 
             // Sending FormData(supported types of server-actions)
             const formData = new FormData()
-            formData.append('file_name',file.name)
+            formData.append('file_key',configId)
             formData.append('file',fileData)
             formData.append('file_type',file.type)
-            setIsUploading(true)
+
+            // Return the file Url 
             const fileUrl = await uploadFile_to_server(formData)
-            // console.log(fileUrl)
             const xhr = new XMLHttpRequest();
             xhr.upload.onprogress = (event) =>{
                 if (event.lengthComputable) {
                     const percentComplete = Math.round((event.loaded / event.total) * 100);
-                    console.log(percentComplete)
                     setUploadProgress(percentComplete);
                 }
                 else{
                     console.log('not computable')
                 }
             }
-            xhr.open('PUT',fileUrl as string)
-            xhr.setRequestHeader("Content-Type",file.type)
-            xhr.send(file)
-        }
 
-        reader.readAsDataURL(file)
-        setIsUploading(false)
-        startTransition(()=>{
-            router.push(`/configure/design?id=${file.name}`)
+            xhr.onload = async()=>{
+                setUploadResult(fileUrl as upload_status)
+                setIsUploading(false)
+                startTransition(async()=>{
+                if (xhr.status === 200){
+                    const width = my_img.width
+                    const height = my_img.height
+                    const prismaForm = new FormData()
+                    prismaForm.append('width',width.toString())
+                    prismaForm.append('height',height.toString())
+                    prismaForm.append('url',fileUrl?.url as string)
+                    prismaForm.append('cropped_url',fileUrl?.url as string)
+                    const configuration = await post_img(prismaForm)
+                    console.log('configuration',configuration)
+                    router.push(`/configure/design?id=${configId}`)
+            }      
+            else{
+                toast({
+                    title: `${file.name} is not uploaded`,
+                    description: 'Check your internet connection, or try again',
+                    variant: 'destructive'
+                })
+            }
         })
+        }
+        xhr.open('PUT',fileUrl.url as string)
+        xhr.setRequestHeader("Content-Type",file.type)
+        xhr.send(file)
+        }
+        reader.readAsDataURL(file)
     }
+
+    
 
     
     return (
@@ -97,7 +135,7 @@ export default function Upload(){
                                 : isUploading || isPending ?
                                 <Loader2 className="animate-spin h-6 w-6 text-zinc-500 mb-2"/>
                                 :
-                                <Image className="h-6 w-6 text-zinc-500 mb-2"/>
+                                <LucidImg className="h-6 w-6 text-zinc-500 mb-2"/>
                             }   
                             <div className="flex flex-col justify-center mb-2 text-sm text-zinc-700">
                                 {
