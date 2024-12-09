@@ -30,7 +30,7 @@ export const uploadFile_to_server = async (formData:FormData) => {
         new PutObjectCommand(params)
       );
 
-      return {status:200,url:`https://${process.env.NEXT_PUBLIC_AWS_BUCKET}.s3.amazonaws.com/${fileKey}}`}
+      return {status:200,url:`https://${process.env.NEXT_PUBLIC_AWS_BUCKET}.s3.amazonaws.com/${fileKey}`}
     } catch (err) {
         console.log(err);
         return {status:400,error:err}

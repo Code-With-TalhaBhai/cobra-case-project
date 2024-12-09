@@ -1,7 +1,7 @@
 import { db } from '@/db'
 import { notFound } from 'next/navigation'
 import React from 'react'
-import ConfiguatorDesign from './ConfiguatorDesign'
+import ConfiguatorDesign from './ConfiguratorDesign'
 
 type Props = {
   searchParams : {
@@ -16,21 +16,21 @@ const Design = async({searchParams}: Props) => {
   }
 
   // db
-  // const configuration = await db.configuration.findUnique({
-  //   where: { id: id as string },
-  // })
+  const configuration = await db.configuration.findUnique({
+    where: { id: id as string },
+  })
 
-  // if (!configuration){
-  //   return notFound()
-  // }
+  if (!configuration){
+    return notFound()
+  }
 
   // dummy 
-  const configuration = {
-    id: 'cm2haajpd0002vs3datsi2z90',
-    imgUrl: 'https://cobra-case-bucket.s3.amazonaws.com/ae1ded6d-bacc-47ef-8cfd-923fd88b9f2a}',
-    width: 1366,
-    height: 768
-  }
+  // const configuration = {
+  //   id: 'cm2haajpd0002vs3datsi2z90',
+  //   imgUrl: 'https://cobra-case-bucket.s3.amazonaws.com/ae1ded6d-bacc-47ef-8cfd-923fd88b9f2a}',
+  //   width: 1366,
+  //   height: 768
+  // }
 
   const {width,height,imgUrl} : any = configuration 
 

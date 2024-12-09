@@ -59,13 +59,14 @@ export default function Upload(){
             // Sending FormData(supported types of server-actions)
             const formData = new FormData()
             formData.append('file_key',configId)
+            // formData.append('file_key','cm2haajpd0002vs3datsi2z90jfdksljfklsfdsf23423dummy') // dummy id
             formData.append('file',fileData)
             formData.append('file_type',file.type)
 
             // Return the file Url 
             const fileUrl = await uploadFile_to_server(formData)
             const xhr = new XMLHttpRequest();
-            xhr.upload.onprogress = (event) =>{
+            xhr.onprogress = (event) =>{
                 if (event.lengthComputable) {
                     const percentComplete = Math.round((event.loaded / event.total) * 100);
                     setUploadProgress(percentComplete);
@@ -86,10 +87,8 @@ export default function Upload(){
                     prismaForm.append('width',width.toString())
                     prismaForm.append('height',height.toString())
                     prismaForm.append('url',fileUrl?.url as string)
-                    prismaForm.append('cropped_url',fileUrl?.url as string)
-                    const configuration = await post_img(prismaForm)
-                    console.log('configuration',configuration)
-                    router.push(`/configure/design?id=${configId}`)
+                    const {configuration} = await post_img(prismaForm)
+                    router.push(`/configure/design?id=${configuration.id}`)
             }      
             else{
                 toast({
@@ -100,7 +99,18 @@ export default function Upload(){
             }
         })
         }
-        xhr.open('PUT',fileUrl.url as string)
+
+        xhr.onerror = () => {
+            setIsUploading(false);
+            toast({
+                title: 'Upload failed',
+                description: 'There was an error uploading the file. Please try again.',
+                variant: 'destructive',
+            });
+        };
+
+
+        xhr.open('GET',fileUrl.url as string)
         xhr.setRequestHeader("Content-Type",file.type)
         xhr.send(file)
         }
