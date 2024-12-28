@@ -10,13 +10,19 @@ import { ArrowRight, Check } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import Confetti from 'react-dom-confetti'
 import { createCheckoutSession } from './actions'
+import { useRouter } from 'next/navigation'
+import { toast } from '@/hooks/use-toast'
+import LoginModal from '@/components/LoginModal'
 
 
 function DesignPreview({configuration}: {configuration:Configuration}) {
   const [showConfetti,setShowConfetti] = useState(false)
+  const router = useRouter()
+  const [isModalOpen,setIsModalOpen] = useState<boolean>(false)
+
   useEffect(()=> setShowConfetti(true))
 
-  const {color,model,finish,material} = configuration
+  const {id,color,model,finish,material} = configuration
   const tw = COLORS.find((supportedColors)=>supportedColors.value == color)?.tw
   const {label:modelLabel} = MODELS.options.find(({value})=>value == model)!
   let totalPrice = BASE_PRICE
@@ -27,10 +33,35 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
     totalPrice += PRODUCT_PRICES.finish.textured
   }
 
-  const {} = useMutation({
+  // const user = 'dummy-user'
+  // const user = ''
+  const user = undefined
+
+  const {mutate: checkoutPayment} = useMutation({
     mutationKey: ["get-checkout-session"],
-    mutationFn: createCheckoutSession
+    mutationFn: createCheckoutSession,
+    onSuccess: ({ url }) => {
+      if (url) router.push(url)
+      else throw Error('Unable to retrive Payment URL')
+    },
+    onError: ()=>{
+      toast({
+        title: 'Something went wrong',
+        description: 'There was an error. Please try again',
+        variant: 'destructive'
+      })
+    }
   })
+
+  const handleCheckout = ()=>{
+    if (user){
+      checkoutPayment({configId:id})
+    }
+    else{
+      localStorage.setItem('configurationId',id)
+      setIsModalOpen(true)
+    }
+  }
 
   return (
     <>
@@ -40,6 +71,8 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
         config={{elementCount:200, spread:360, duration:3000}}
         />
     </div>
+
+    <LoginModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}/>
 
     <div className='mt-20 grid grid-cols-1 text-sm sm:grid-cols-12 sm:grid-rows-1 sm:gap-x-6 md:gap-x-8 lg:gap-x-12 '>
       <div className='sm:col-span-4 md:col-span-3 md:row-span-2 md:row-end-2'>
@@ -113,7 +146,7 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
             </div>
 
               <div className='mt-8 flex justify-end pb-12'>
-                  <Button className='px-4 sm:px-6 lg:px-8'>Check out <ArrowRight className='w-4 h-4 ml-1.5 inline'/></Button>
+                  <Button onClick={handleCheckout} className='px-4 sm:px-6 lg:px-8'>Check out <ArrowRight className='w-4 h-4 ml-1.5 inline'/></Button>
               </div>
         </div>
       </div>

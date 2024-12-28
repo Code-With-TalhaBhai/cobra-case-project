@@ -3,6 +3,8 @@
 import { BASE_PRICE, PRODUCT_PRICES } from "@/config/products"
 import { db } from "@/db"
 import { Order } from "@prisma/client"
+import {stripe} from "@/lib/stripe"
+
 
 
 export const createCheckoutSession = async({configId}:{configId:string})=>{
@@ -46,5 +48,32 @@ export const createCheckoutSession = async({configId}:{configId:string})=>{
       }
     })
   }
+
+
+  const product = await stripe.products.create({
+    name: 'Custom iPhone Case',
+    images: [configuration.imgUrl],
+    default_price_data: {
+      currency: 'USD',
+      unit_amount: totalPrice
+    }
+  })
+
+
+  const stripeSession = await stripe.checkout.sessions.create({
+    success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,
+    payment_method_types: ['card','paypal'],
+    mode: "payment",
+    shipping_address_collection: {allowed_countries: ['US','PK','UA']},
+    metadata: {
+      userId: user.id,
+      orderId: order.id
+    },
+    line_items: [{price: product.default_price as string, quantity: 1}]
+  })
+
+
+  return { url: stripeSession.url }
   
 }
