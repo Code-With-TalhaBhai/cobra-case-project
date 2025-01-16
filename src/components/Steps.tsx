@@ -23,7 +23,6 @@ const STEPS = [
 
 export default function Steps() {
     const pathname = usePathname()
-    console.log(pathname)
     return (
         <ol className="rounded-md bg-white lg:flex lg:rounded-none lg:border-l lg:border-r lg:border-gray-200">
     {STEPS.map((step,index)=>{

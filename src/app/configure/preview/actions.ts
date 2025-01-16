@@ -4,6 +4,7 @@ import { BASE_PRICE, PRODUCT_PRICES } from "@/config/products"
 import { db } from "@/db"
 import { Order } from "@prisma/client"
 import {stripe} from "@/lib/stripe"
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 
 
 
@@ -26,7 +27,13 @@ export const createCheckoutSession = async({configId}:{configId:string})=>{
       }
 
   let order : Order | undefined = undefined
-  const user = {id:'dsafasfasdfdsafd'}
+  const { getUser } = getKindeServerSession()
+  const user = await getUser()
+
+  if(!user){
+    throw new Error('You need to be logged in')
+  }
+
 
   const existingOrder = await db.order.findFirst({
     where: {
@@ -75,5 +82,4 @@ export const createCheckoutSession = async({configId}:{configId:string})=>{
 
 
   return { url: stripeSession.url }
-  
 }

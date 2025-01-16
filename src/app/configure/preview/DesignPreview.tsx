@@ -13,6 +13,7 @@ import { createCheckoutSession } from './actions'
 import { useRouter } from 'next/navigation'
 import { toast } from '@/hooks/use-toast'
 import LoginModal from '@/components/LoginModal'
+import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 
 
 function DesignPreview({configuration}: {configuration:Configuration}) {
@@ -33,16 +34,14 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
     totalPrice += PRODUCT_PRICES.finish.textured
   }
 
-  // const user = 'dummy-user'
-  // const user = ''
-  const user = undefined
+  const {user} = useKindeBrowserClient()
 
   const {mutate: checkoutPayment} = useMutation({
     mutationKey: ["get-checkout-session"],
     mutationFn: createCheckoutSession,
     onSuccess: ({ url }) => {
       if (url) router.push(url)
-      else throw Error('Unable to retrive Payment URL')
+      else throw Error('Unable to retrieve Payment URL')
     },
     onError: ()=>{
       toast({

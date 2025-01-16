@@ -28,7 +28,6 @@ export default function Upload(){
     const [upload_result,setUploadResult] = useState<upload_status | undefined>(undefined)
     const {toast} = useToast()
     const router = useRouter()
-    const [check,setCheck] = useState<number>(0)
 
 
     const onDropRejected = (rejectedFiles:FileRejection[])=>{
@@ -116,12 +115,9 @@ export default function Upload(){
         }
         reader.readAsDataURL(file)
     }
-
-    
-
     
     return (
-        <div className={cn('relative h-full flex-1 my-16 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:rounded-2xl flex justify-center flex-col items-center',
+        <div className={cn('relative h-full cursor-pointer flex-1 my-16 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:rounded-2xl flex justify-center flex-col items-center',
         {isDragOver:'ring-blue-900/25 bg-blue-900/10'})}>
             <div className="relative flex flex-1 flex-col items-center justify-center w-full">
                 <Dropzone

@@ -2,6 +2,7 @@ import Image from "next/image"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog"
 import type { Dispatch,SetStateAction } from "react"
 import { Button, buttonVariants } from "./ui/button"
+import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs"
 
 type Props = {
   isOpen: boolean
@@ -31,8 +32,8 @@ function LoginModal({isOpen,setIsOpen}: Props) {
           </DialogHeader>
 
           <div className="grid grid-cols-2 gap-6 divide-x divide-gray-200">
-            <Button className={buttonVariants({variant: 'secondary'})}>Login</Button>
-            <Button className={buttonVariants({variant: 'default'})}>Sign up</Button>
+            <LoginLink className={buttonVariants({variant: 'secondary'})}>Login</LoginLink>
+            <RegisterLink className={buttonVariants({variant: 'default'})}>Sign up</RegisterLink>
           </div>
         </DialogContent>
     </Dialog>

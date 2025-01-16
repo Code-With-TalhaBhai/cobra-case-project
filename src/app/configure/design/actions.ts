@@ -3,7 +3,8 @@
 import { db } from "@/db";
 import { CaseColor, CaseFinish, CaseMaterial, PhoneModel } from "@prisma/client";
 
-export type configArgs = {color:CaseColor,
+export type configArgs = {
+    color:CaseColor,
     model:PhoneModel,
     material:CaseMaterial,
     finish:CaseFinish,
