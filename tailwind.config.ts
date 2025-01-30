@@ -89,7 +89,7 @@ const config = {
           }
         }
       },
-      "falashing":{
+      "flashing":{
         '0% 100%': {opacity: '0.2'},
         '20%': {opacity: '1'}
       },
