@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import { AspectRatio } from "./ui/aspect-ratio"
 import { COLORS } from "@/config/colors"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 
 export default function PhonePreview({croppedImageUrl,color}:{croppedImageUrl:string,color:CaseColor}){
@@ -24,8 +25,9 @@ export default function PhonePreview({croppedImageUrl,color}:{croppedImageUrl:st
 
     useEffect(()=>{
         handleResize()
-        // element.getBoundingClientRect() -> used to find 
-    },[ref.current])
+        window.addEventListener('resize',handleResize)
+        return ()=> window.removeEventListener('resize',handleResize)
+    },[])
 
 
     return (
@@ -37,13 +39,13 @@ export default function PhonePreview({croppedImageUrl,color}:{croppedImageUrl:st
                 top: renderedDimensions.height / 6.22
             }}
             >
-                <img width={renderedDimensions.width / (3000 / 637)}
+                <Image width={renderedDimensions.width / (3000 / 637)}
                 className={cn("phone-skew relative z-20 rounded-t-[15px] rounded-b-[10px] md:rounded-t-[30px] md:rounded-b-[20px]",`bg-${caseBackgroundColor}`)}
                 src={croppedImageUrl} alt="" />
             </div>
 
             <div className="relative h-full w-full z-40">
-                <img 
+                <Image 
                 src="/clearphone.png"
                 className="pointer-events-none h-full w-full antialiased rounded-md"
                 alt="phone" />

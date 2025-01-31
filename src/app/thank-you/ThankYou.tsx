@@ -10,9 +10,6 @@ import { formatPrice } from "@/lib/utils";
 const ThankYou = () => {
   const searchParams = useSearchParams()
     const orderId = searchParams.get('orderId') || ''
-    if (!orderId){
-        return 'Invalid Id'
-    }
 
     const {data} = useQuery({
         queryKey: ['get-payment-status'],
@@ -68,7 +65,7 @@ const ThankYou = () => {
             <div className="mt-10 flex flex-auto flex-col">
               <h4 className="font-semibold text-zinc-900">You made a great choice!</h4>
               <p className="mt-2 text-sm text-zinc-600">
-                We at CobraCase believe that a phone case doesn't only need to look good, but also last you for the years to come. We offer a 2-year print guarantee: If your case isn't of the highest quality, we'll replace it for free
+                We at CobraCase believe that a phone case doesn&#39t only need to look good, but also last you for the years to come. We offer a 2-year print guarantee: If your case isn&#39t of the highest quality, we&#39ll replace it for free
               </p>
             </div>
         </div>

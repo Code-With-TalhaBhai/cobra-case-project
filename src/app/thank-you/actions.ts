@@ -12,7 +12,7 @@ export const getPaymentStatus = async({orderId}:{orderId:string})=>{
         throw new Error('You need to be logged in to view')
     }
 
-    const order = db.order.findFirst({
+    const order = await db.order.findFirst({
         where: {
             id: orderId,
             userId: user.id

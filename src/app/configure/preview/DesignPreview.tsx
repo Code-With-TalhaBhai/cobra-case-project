@@ -21,7 +21,7 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
   const router = useRouter()
   const [isModalOpen,setIsModalOpen] = useState<boolean>(false)
 
-  useEffect(()=> setShowConfetti(true))
+  useEffect(()=> setShowConfetti(true),[])
 
   const {id,color,model,finish,material} = configuration
   const tw = COLORS.find((supportedColors)=>supportedColors.value == color)?.tw
