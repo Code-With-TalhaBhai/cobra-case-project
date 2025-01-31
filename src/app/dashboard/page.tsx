@@ -47,7 +47,7 @@ const Page = async()=>{
         }
     })
 
-    const lastMonthProfite = await db.order.aggregate({
+    const lastMonthProfit = await db.order.aggregate({
         where: {
             isPaid: true,
             createdAt: {
@@ -93,7 +93,7 @@ const Page = async()=>{
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Progress value={(lastWeekProfit._sum.amount ?? 0 / MONTHLY_GOAL)*100}/>
+                            <Progress value={(lastMonthProfit._sum.amount ?? 0 / MONTHLY_GOAL)*100}/>
                         </CardFooter>
                     </Card>
                     </div>
