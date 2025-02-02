@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { twMerge } from "tailwind-merge";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import { ArrowRight, Check, Phone, Star } from "lucide-react";
 import Iphone from "@/components/IPhone";
