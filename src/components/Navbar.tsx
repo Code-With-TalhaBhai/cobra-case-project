@@ -24,7 +24,7 @@ const Navbar = async()=> {
                                 Sign Out
                             </Link>
                             {isAdmin ? (
-                                <Link href = "">
+                                <Link href = "/dashboard">
                                     Dashboard ✨
                                 </Link>
                             ):
