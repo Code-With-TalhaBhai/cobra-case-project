@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { twMerge } from "tailwind-merge";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import { ArrowRight, Check, Phone, Star } from "lucide-react";
 import Iphone from "@/components/IPhone";
@@ -22,7 +23,7 @@ export default function Home(props:any) {
           <div className="col-span-2 px-6 lg:px-0 lg:pt-4">
             <div className="relative mx-auto text-center lg:text-left flex flex-col items-center lg:items-start">
               <div className="absolute left-0 -top-20 w-28 hidden lg:block">
-                <Image src="/snake-1.png" alt="snake" className="w-full"/>              
+                <img src="/snake-1.png" className="w-full"/>              
               </div>
 
               <h1 className="relative w-fit tracking-tight text-balance font-bold mt-16 !leading-tight text-gray-900 text-5xl md:text-6xl lg:text-7xl">
@@ -58,11 +59,11 @@ export default function Home(props:any) {
 
               <div className="mt-12 flex flex-col sm:flex-row items-center sm:items-start gap-5">
                 <div className="flex -space-x-4 user-img">
-                  <Image src="/users/user-1.png" alt="my-user" />
-                  <Image src="/users/user-2.png" alt="my-user" />
-                  <Image src="/users/user-3.png" alt="my-user" />
-                  <Image src="/users/user-4.jpg" alt="my-user" />
-                  <Image className="object-cover" src="/users/user-5.jpg" alt="my-user" />
+                  <img src="/users/user-1.png" alt="my-user" />
+                  <img src="/users/user-2.png" alt="my-user" />
+                  <img src="/users/user-3.png" alt="my-user" />
+                  <img src="/users/user-4.jpg" alt="my-user" />
+                  <img className="object-cover" src="/users/user-5.jpg" alt="my-user" />
                 </div>
               <div className="flex flex-col justify-between items-center sm:items-start">
                 <div className="flex gap-0.5 star-icon">
@@ -84,8 +85,8 @@ export default function Home(props:any) {
           {/* col-span-full-> span across all element */}
           <div className="col-span-full lg:col-span-1 w-full flex justify-center px-8 sm:px-16 md:px-0 mt-32 lg:mx-0 lg:mt-20 h-fit">
             <div className="relative md:max-w-full">
-              <Image className="absolute w-40 lg:w-52 left-48 -top-32 select-none hidden sm:block lg:hidden xl:block" src="/your-image.png" alt="" />
-              <Image className="absolute w-20 -left-6 -bottom-6 select-none" src="/line.png" alt="" />
+              <img className="absolute w-40 lg:w-52 left-48 -top-32 select-none hidden sm:block lg:hidden xl:block" src="/your-image.png" alt="" />
+              <img className="absolute w-20 -left-6 -bottom-6 select-none" src="/line.png" alt="" />
               <Iphone className="w-64" imgSrc="/testimonials/1.jpg"/>
             </div>
           </div>
@@ -103,7 +104,7 @@ export default function Home(props:any) {
                {' '}
                say
               </h2>
-              <Image src="/snake-2.png" className="w-24 order-0 lg:order-2" alt="" />
+              <img src="/snake-2.png" className="w-24 order-0 lg:order-2" alt="" />
           </div>
 
            <div className="mx-auto grid max-w-2xl grid-cols-1 px-4 lg:mx-0 lg:max-w-none gap-y-16 lg:grid-cols-2">
@@ -117,7 +118,7 @@ export default function Home(props:any) {
               </div>
 
               <div className="flex gap-4 mt-2">
-                <Image className="rounded-full w-12 h-12 object-cover" src="/users/user-1.png" alt="user" />
+                <img className="rounded-full w-12 h-12 object-cover" src="/users/user-1.png" alt="user" />
               <div className="flex flex-col">
                 <p className="font-semibold">Jonathan</p>
                 <div className="flex gap-1.5 items-center text-zinc-600">
@@ -138,7 +139,7 @@ export default function Home(props:any) {
               </div>
 
               <div className="flex gap-4 mt-2">
-                <Image className="rounded-full w-12 h-12 object-cover" src="/users/user-4.jpg" alt="user" />
+                <img className="rounded-full w-12 h-12 object-cover" src="/users/user-4.jpg" alt="user" />
               <div className="flex flex-col">
                 <p className="font-semibold">Josh</p>
                 <div className="flex gap-1.5 items-center text-zinc-600">
@@ -171,10 +172,10 @@ export default function Home(props:any) {
 
           <div className="mx-auto max-w-6xl px-6 lg:px-8">
               <div className="relative flex flex-col items-center md:grid grid-cols-2 gap-40">
-                  <Image src="/arrow.png" className="absolute top-[25rem] md:top-1/2 z-10 left-1/2 -translate-y-1/2 -translate-x-1/2 rotate-90 md:rotate-0" alt="" />
+                  <img src="/arrow.png" className="absolute top-[25rem] md:top-1/2 z-10 left-1/2 -translate-y-1/2 -translate-x-1/2 rotate-90 md:rotate-0" alt="" />
 
               <div className="relative h-80 md:h-full w-full md:justify-self-end max-w-sm rounded-xl bg-gray-900/5 ring-inset ring-gray-900/10 lg:rounded-2xl">
-                <Image 
+                <img 
                 src="/horse.jpg"
                 className="rounded-md object-cover bg-white shadow-2xl ring-1 ring-gray-900/10 h-full w-full"
                 alt="" />

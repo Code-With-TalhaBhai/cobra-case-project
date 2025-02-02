@@ -1,6 +1,5 @@
 'use client'
 import { cn } from "@/lib/utils"
-import Image from "next/image"
 import { usePathname } from "next/navigation"
 
 
@@ -38,10 +37,10 @@ export default function Steps() {
                     'bg-primary': isCompleted
                 }
             )} aria-hidden="true"/>
-                
+
             <span className={cn(index !== 0 ? 'lg:pl-9':'','flex items-center px-6 py-4 text-sm font-medium')}>
                 <span className="flex-shrink-0">
-                    <Image src={imgPath}
+                    <img src={imgPath}
                     className={cn('flex h-20 w-20 object-contain items-center justify-center',{
                         'border-none': isCompleted,
                         'border-zinc-700': isCurrent
@@ -81,7 +80,7 @@ export default function Steps() {
             </div>
         </li>
     })
-    
+
     }
     </ol>
 )
