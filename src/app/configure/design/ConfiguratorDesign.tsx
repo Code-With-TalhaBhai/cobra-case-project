@@ -44,7 +44,7 @@ const ConfiguratorDesign = ({configId,imageUrl,imageDimensions}: Props) => {
 
   const router = useRouter()
 
-  const {mutate} = useMutation({
+  const {mutate,isPending} = useMutation({
     mutationKey: ["save-config"],
     mutationFn: async(args:configArgs)=>{
       await Promise.all([saveConfiguration(),saveConfig(args)])
@@ -324,7 +324,10 @@ const ConfiguratorDesign = ({configId,imageUrl,imageDimensions}: Props) => {
                 <p className='font-medium whitespace-nowrap'>
                 {formatPrice((BASE_PRICE + options.materials.price + options.finish.price) / 100)}
                 </p>
-                <Button onClick={()=>mutate({
+                <Button 
+                isLoading={isPending}
+                disabled={isPending}
+                onClick={()=>mutate({
                   color:options.color.value,
                   material:options.materials.value,
                   finish: options.finish.value,

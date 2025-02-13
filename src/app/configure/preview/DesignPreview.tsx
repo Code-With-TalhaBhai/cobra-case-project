@@ -2,7 +2,7 @@
 import IPhone from '@/components/IPhone'
 import { Button } from '@/components/ui/button'
 import { BASE_PRICE, PRODUCT_PRICES } from '@/config/products'
-import { formatPrice } from '@/lib/utils'
+import { cn, formatPrice } from '@/lib/utils'
 import { COLORS, MODELS } from '@/validators/option-validator'
 import { Configuration } from '@prisma/client'
 import { useMutation } from '@tanstack/react-query'
@@ -73,9 +73,9 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
 
     <LoginModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}/>
 
-    <div className='mt-20 grid grid-cols-1 text-sm sm:grid-cols-12 sm:grid-rows-1 sm:gap-x-6 md:gap-x-8 lg:gap-x-12 '>
-      <div className='sm:col-span-4 md:col-span-3 md:row-span-2 md:row-end-2'>
-          <IPhone className={`bg-${tw}`} imgSrc={configuration.croppedImgUrl!}/>
+    <div className='mt-20 flex flex-col items-center md:grid text-sm sm:grid-cols-12 sm:grid-rows-1 sm:gap-x-6 md:gap-x-8 lg:gap-x-12 '>
+      <div className='md:col-span-4 lg:col-span-3 md:row-span-2 md:row-end-2'>
+          <IPhone className={cn(`bg-${tw}`,'max-w-[150px] md:max-w-full')} imgSrc={configuration.croppedImgUrl!}/>
       </div>
 
       <div className='mt-6 sm:col-span-9 sm:mt-0 md:row-end'>
@@ -117,7 +117,7 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
                 </div>
 
               {
-              finish !== 'textured' ? (
+              finish === 'textured' ? (
                 <div className='flex items-center justify-between py-1 mt-2'>
                   <p className='text-gray-600'>Texture Finish</p>
                   <p className='font-medium text-gray-900'>{formatPrice(PRODUCT_PRICES.finish.textured / 100)}</p>
@@ -125,7 +125,7 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
               ) : null}
 
               {
-                material !== 'polycarbonate' ? (
+                material === 'polycarbonate' ? (
                 <div className='flex items-center justify-between py-1 mt-2'>
                   <p className='text-gray-600'>Soft Polycarbonate material</p>
                   <p className='font-medium text-gray-900'>
