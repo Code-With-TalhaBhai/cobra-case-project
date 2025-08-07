@@ -13,7 +13,7 @@ export const COLORS = [
     {label: "Yellow", value: 'yellow', tw:'yellow-400'},
     {label: "Red", value: 'red', tw:'red-500'},
     {label: "Emerald", value: 'emerald', tw:'emerald-400'},
-    {label: "Gray", value: 'gray', tw:'gray-600'},
+    {label: "Gray", value: 'gray', tw:'gray-600'}
 ] as const
 
 
