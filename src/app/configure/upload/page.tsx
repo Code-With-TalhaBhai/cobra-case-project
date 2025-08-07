@@ -52,17 +52,17 @@ export default function Upload(){
 
         reader.onload = async(e: ProgressEvent<FileReader>)=>{
             const fileData = e.target?.result as string
-            my_img.src = fileData
+            my_img.src = e.target?.result as string
             setIsUploading(true) 
 
             // Sending FormData(supported types of server-actions)
             const formData = new FormData()
             formData.append('file_key',configId)
-            // formData.append('file_key','cm2haajpd0002vs3datsi2z90jfdksljfklsfdsf23423dummy') // dummy id
             formData.append('file',fileData)
+            // formData.append('file',file)
             formData.append('file_type',file.type)
 
-            // Return the file Url 
+            // // Return the file Url 
             const fileUrl = await uploadFile_to_server(formData)
             const xhr = new XMLHttpRequest();
             xhr.onprogress = (event) =>{
