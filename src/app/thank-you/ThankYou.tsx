@@ -30,7 +30,7 @@ const ThankYou = () => {
         )
     }
 
-    if (data == false){
+    if (data === false){
         return (
             <div className="w-full mt-24 flex justify-center">
                 <div className="flex flex-col items-center gap-2">
@@ -65,7 +65,7 @@ const ThankYou = () => {
             <div className="mt-10 flex flex-auto flex-col">
               <h4 className="font-semibold text-zinc-900">You made a great choice!</h4>
               <p className="mt-2 text-sm text-zinc-600">
-                We at CobraCase believe that a phone case doesn&#39t only need to look good, but also last you for the years to come. We offer a 2-year print guarantee: If your case isn&#39t of the highest quality, we&#39ll replace it for free
+                We, CobraCase believe that a phone case doesn&#39;t only need to look good, but also last you for the years to come. We offer a 2-year print guarantee: If your case isn&#39;t of the highest quality, we&#39;ll replace it for free
               </p>
             </div>
         </div>
@@ -107,12 +107,12 @@ const ThankYou = () => {
           <div className="grid grid-cols-2 gap-x-6 border-t border-zinc-200 py-10 text-sm">
             <div>
               <p className="font-medium text-zinc-900">Payment Staus</p>
-              <div className="mt-2 text-zinc-200">Paid</div>
+              <div className="mt-2 text-zinc-600">Paid</div>
             </div>
 
             <div>
               <p className="font-medium text-zinc-900">Shipping Method</p>
-              <p className="mt-2 text-zinc-200">DHL, takes up to 3 working days</p>
+              <p className="mt-2 text-zinc-600">DHL, takes up to 3 working days</p>
             </div>
           </div>
         </div>

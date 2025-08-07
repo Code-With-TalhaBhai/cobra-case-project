@@ -3,7 +3,17 @@ import { PRODUCT_PRICES } from "@/config/products"
 export const COLORS = [
     {label: "Black", value: 'black', tw:'zinc-900'},
     {label: "Blue", value: 'blue', tw:'blue-950'},
-    {label: "Rose", value: 'rose', tw: 'rose-950'}
+    {label: "Rose", value: 'rose', tw:'rose-950'},
+    {label: "Violet", value: 'violet', tw:'indigo-900'},
+    {label: "Lime", value: 'lime', tw:'lime-600'},
+    {label: "Fuchsia", value: 'fuchsia', tw:'fuchsia-900'},
+    {label: "Pink", value: 'pink', tw:'pink-500'},
+    {label: "Green", value: 'green', tw:'green-600'},
+    {label: "Cyan", value: 'cyan', tw:'cyan-500'},
+    {label: "Yellow", value: 'yellow', tw:'yellow-400'},
+    {label: "Red", value: 'red', tw:'red-500'},
+    {label: "Emerald", value: 'emerald', tw:'emerald-400'},
+    {label: "Gray", value: 'gray', tw:'gray-600'},
 ] as const
 
 

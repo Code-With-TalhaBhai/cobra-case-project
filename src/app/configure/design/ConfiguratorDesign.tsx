@@ -32,6 +32,7 @@ const ConfiguratorDesign = ({configId,imageUrl,imageDimensions}: Props) => {
   const [options,setOptions] = useState<
   {
     color: (typeof COLORS)[number]
+    // color: any
     model: (typeof MODELS.options)[number]
     materials: (typeof MATERIALS.options[number])
     finish: (typeof FINISHES.options[number])
@@ -75,9 +76,29 @@ const ConfiguratorDesign = ({configId,imageUrl,imageDimensions}: Props) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const phoneCaseRef = useRef<HTMLDivElement>(null)
 
+  
+  // if we use `uploadThing` instead of `s3`
+  // function base64ToBlob(base64Data:string,mimeType:string){
+  //   const byteCharacters = Buffer.from(base64Data,'base64')
+  //   return new Blob([byteCharacters],{type:mimeType})
+  // }
+  async function uploadImg(base64Data:string,mimeType:string){
+      const formData = new FormData()
+        formData.append('file_key',configId)
+        formData.append('file',base64Data)
+        formData.append('file_type',mimeType)
+        const url = await uploadFile_to_server(formData)
+        return url
+    }
 
+    async function update_crop_url(url:string){
+      const formData = new FormData()
+      formData.append('configId',configId)
+      formData.append('cropped_url',url)
+      await post_img(formData)
+    }
 
-  async function saveConfiguration(){
+  const saveConfiguration = async()=>{
     try {
       const {left:caseLeft,top:caseTop,width,height} = phoneCaseRef.current!.getBoundingClientRect()
       const {left:containerLeft,top:containerTop} = containerRef.current!.getBoundingClientRect()
@@ -118,29 +139,6 @@ const ConfiguratorDesign = ({configId,imageUrl,imageDimensions}: Props) => {
     }
   }
 
-  // if we use `uploadThing` instead of `s3`
-  // function base64ToBlob(base64Data:string,mimeType:string){
-  //   const byteCharacters = Buffer.from(base64Data,'base64')
-  //   return new Blob([byteCharacters],{type:mimeType})
-  // }
-
-  async function uploadImg(base64Data:string,mimeType:string){
-    const formData = new FormData()
-    formData.append('file_key',configId)
-      // const dummy_id = 'cm2haajpd0002vs3datsi2z90jfdksljfklsfdsf'
-      // formData.append('file_key',dummy_id)
-      formData.append('file',base64Data)
-      formData.append('file_type',mimeType)
-      const url = await uploadFile_to_server(formData)
-      return url
-  }
-
-  async function update_crop_url(url:string){
-    const formData = new FormData()
-    formData.append('configId',configId)
-    formData.append('cropped_url',url)
-    await post_img(formData)
-  }
 
   return (
     <div className='relative mt-20 grid grid-cols-1 lg:grid-cols-3 mb-20 pb-20'>
@@ -165,12 +163,13 @@ const ConfiguratorDesign = ({configId,imageUrl,imageDimensions}: Props) => {
 
           {/* image inside case */}
           <Rnd default={
-            {
+          {
             x:150,
             y:205,
             width:imageDimensions.width / 4,
-            height:imageDimensions.height / 4}
+            height:imageDimensions.height / 4
           }
+        }
           onDragStop={(e,data)=>{
             const {x,y} = data
             setRenderedPosition({x,y})
@@ -220,12 +219,12 @@ const ConfiguratorDesign = ({configId,imageUrl,imageDimensions}: Props) => {
                 color: val,
             }))}>
               <Label>{options.color.label}</Label>
-              <div className='mt-3 flex items-center space-x-3'>
+              <div className='mt-3 flex items-center gap-4 flex-wrap'>
                 {COLORS.map((color)=>(
                   <Radio key={color.label} value={color}
-                  className={({focus,checked})=>cn('relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 active:ring-0 focus:ring-0 active:outline-none focus:outline-none border-2 border-transparent',{[`border-${color.tw}`]:focus || checked})}
+                  className={({focus,checked})=>cn('relative flex cursor-pointer items-center justify-center rounded-full p-0.5 active:ring-0 focus:ring-0 active:outline-none focus:outline-none border-2 border-transparent',{[`border-${color.tw}`]:focus || checked})}
                   >
-                    <span className={`bg-${color.tw} h-8 w-8 rounded-full border border-black border-opacity-10`}/>
+                    <span className={`bg-${color.tw} h-10 w-10 rounded-full border border-black border-opacity-10`}/>
                   </Radio>
                 ))}
               </div>

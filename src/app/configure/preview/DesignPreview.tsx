@@ -34,9 +34,8 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
     totalPrice += PRODUCT_PRICES.finish.textured
   }
 
-  const {user} = useKindeBrowserClient()
-
-  const {mutate: checkoutPayment} = useMutation({
+  const {user,isLoading} = useKindeBrowserClient()
+  const {mutate: checkoutPayment,isPending} = useMutation({
     mutationKey: ["get-checkout-session"],
     mutationFn: createCheckoutSession,
     onSuccess: ({ url }) => {
@@ -57,6 +56,7 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
       checkoutPayment({configId:id})
     }
     else{
+      // console.log('user is',user)
       localStorage.setItem('configurationId',id)
       setIsModalOpen(true)
     }
@@ -65,10 +65,10 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
   return (
     <>
     <div aria-hidden="true" className='pointers-event-none select-none absolute inset-0 overflow-hidden flex justify-center'>
-        <Confetti
-        active={showConfetti}
-        config={{elementCount:200, spread:360, duration:3000}}
-        />
+      <Confetti
+      active={showConfetti}
+      config={{elementCount:600, spread:360, duration:5000}}
+      />
     </div>
 
     <LoginModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}/>
@@ -122,7 +122,8 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
                   <p className='text-gray-600'>Texture Finish</p>
                   <p className='font-medium text-gray-900'>{formatPrice(PRODUCT_PRICES.finish.textured / 100)}</p>
                 </div>
-              ) : null}
+              ) : null
+              }
 
               {
                 material === 'polycarbonate' ? (
@@ -145,7 +146,7 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
             </div>
 
               <div className='mt-8 flex justify-end pb-12'>
-                  <Button onClick={handleCheckout} className='px-4 sm:px-6 lg:px-8'>Check out <ArrowRight className='w-4 h-4 ml-1.5 inline'/></Button>
+                  <Button isLoading={(isLoading?isLoading: undefined) || isPending} disabled={(isLoading?isLoading:undefined) || isPending} onClick={handleCheckout} className='px-4 sm:px-6 lg:px-8'>Check out <ArrowRight className='w-4 h-4 ml-1.5 inline'/></Button>
               </div>
         </div>
       </div>
