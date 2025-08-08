@@ -34,6 +34,8 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
     totalPrice += PRODUCT_PRICES.finish.textured
   }
 
+
+  
   const {user,isLoading} = useKindeBrowserClient()
   const {mutate: checkoutPayment,isPending} = useMutation({
     mutationKey: ["get-checkout-session"],
@@ -53,10 +55,12 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
 
   const handleCheckout = ()=>{
     if (user){
+      console.log('handling handle checkout')
       checkoutPayment({configId:id})
     }
     else{
       // console.log('user is',user)
+      console.log('handling handle checkout not login')
       localStorage.setItem('configurationId',id)
       setIsModalOpen(true)
     }

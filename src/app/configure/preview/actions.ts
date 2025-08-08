@@ -9,6 +9,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 
 
 export const createCheckoutSession = async({configId}:{configId:string})=>{
+  console.log('entering createcheckout session')
     const configuration = await db.configuration.findUnique({
         where: {id: configId}
     })
@@ -31,7 +32,7 @@ export const createCheckoutSession = async({configId}:{configId:string})=>{
   const user = await getUser()
 
   if(!user){
-    throw new Error('You need to be logged in')
+    throw new Error('You need to be logged in');
   }
 
 
@@ -66,7 +67,7 @@ export const createCheckoutSession = async({configId}:{configId:string})=>{
     }
   })
 
-
+  console.log('before session')
   const stripeSession = await stripe.checkout.sessions.create({
     success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}`,
     cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,

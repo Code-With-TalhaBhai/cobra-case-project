@@ -37,6 +37,7 @@ export const uploadFile_to_server = async (formData:FormData) => {
         Body: buffer,
         ContentType: fileType
       }
+      
       // Simple Upload
       await s3Client.send(
         new PutObjectCommand(params)

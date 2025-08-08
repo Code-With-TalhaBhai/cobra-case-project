@@ -49,7 +49,8 @@ const ConfiguratorDesign = ({configId,imageUrl,imageDimensions}: Props) => {
     mutationFn: async(args:configArgs)=>{
       await Promise.all([saveConfiguration(),saveConfig(args)])
     },
-    onError: ()=>{
+    onError: (err)=>{
+      console.log('error is',err)
       toast({
         title: "Something went wrong",
         description: "There was an error on our end. Please try again",
