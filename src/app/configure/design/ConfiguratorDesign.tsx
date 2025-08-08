@@ -32,7 +32,6 @@ const ConfiguratorDesign = ({configId,imageUrl,imageDimensions}: Props) => {
   const [options,setOptions] = useState<
   {
     color: (typeof COLORS)[number]
-    // color: any
     model: (typeof MODELS.options)[number]
     materials: (typeof MATERIALS.options[number])
     finish: (typeof FINISHES.options[number])

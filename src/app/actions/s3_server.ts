@@ -13,8 +13,6 @@ const s3Client = new S3Client(
 
 
 console.log('hitting the api')
-console.log('aws_access',process.env.AWS_ACCESS_KEY_ID)
-console.log('secretAccessKey',process.env.AWS_SECRET_ACCESS_KEY)
 
 
 export const uploadFile_to_server = async (formData:FormData) => {
@@ -24,13 +22,12 @@ export const uploadFile_to_server = async (formData:FormData) => {
       // const file = formData.get('file') as Blob
       const fileType = formData.get('file_type') as string
 
-    // if (!file || typeof file.arrayBuffer !== 'function' || (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg')) {
-    //   throw new Error('Invalid file upload');
-    // }
+      console.log('file type is',fileType)
 
-      const buffer = Buffer.from(file.split(',')[1],'base64')
+      // const buffer = Buffer.from(file.split(',')[1],'base64')
+      const buffer = Buffer.from(file.replace(/^data:\w+\/[a-zA-Z+\-. ]+;base64,/, ''),'base64')
 
-      // const buffer = Buffer.from(await file.arrayBuffer())
+      console.log('converted to buffer')
 
       const params = {
         Bucket: process.env.AWS_BUCKET,
@@ -43,9 +40,11 @@ export const uploadFile_to_server = async (formData:FormData) => {
         new PutObjectCommand(params)
       );
 
+      console.log('we have achieved')
+
       return {status:200,url:`https://${process.env.AWS_BUCKET}.s3.amazonaws.com/${fileKey}`}
     } catch (err) {
-        console.log(err);
+        console.log('s3 error is',err);
         return {status:400,error:err}
     }
   };
