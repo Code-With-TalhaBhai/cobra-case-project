@@ -1,5 +1,5 @@
 'use server'
-import {S3Client,PutObjectCommand} from "@aws-sdk/client-s3"
+import {S3Client,PutObjectCommand, ListBucketsCommand} from "@aws-sdk/client-s3"
 
 
 const s3Client = new S3Client(
@@ -10,6 +10,8 @@ const s3Client = new S3Client(
         }
     }
 )
+
+s3Client.send(new ListBucketsCommand({})).then((data)=>console.log(data))
 
 
 console.log('hitting the api')
@@ -40,7 +42,7 @@ export const uploadFile_to_server = async (formData:FormData) => {
         new PutObjectCommand(params)
       );
 
-      console.log('we have achieved')
+      // console.log('we have achieved')
 
       return {status:200,url:`https://${process.env.AWS_BUCKET}.s3.amazonaws.com/${fileKey}`}
     } catch (err) {
