@@ -17,7 +17,7 @@ export const post_img = async(formData:FormData)=>{
             imgUrl: url as string,
         }
         })
-        return {configuration:configuration}
+        return {configuration: configuration}
     }
     else{
         let cropped_url = formData.get('cropped_url')

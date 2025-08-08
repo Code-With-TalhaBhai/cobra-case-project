@@ -11,7 +11,11 @@ const s3Client = new S3Client(
     }
 )
 
+
 console.log('hitting the api')
+console.log('aws_access',process.env.AWS_ACCESS_KEY_ID)
+console.log('secretAccessKey',process.env.AWS_SECRET_ACCESS_KEY)
+
 
 export const uploadFile_to_server = async (formData:FormData) => {
     try {
