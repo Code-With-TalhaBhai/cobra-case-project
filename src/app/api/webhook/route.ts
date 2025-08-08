@@ -69,6 +69,6 @@ export async function POST(req:Request){
 
     } catch (error) {
         console.log('webhook error',error)
-        return Response.json({message: 'Something went wrong',ok:false,status: 500})
+        return Response.json({message: error,ok:false,status: 500})
     }
 }
