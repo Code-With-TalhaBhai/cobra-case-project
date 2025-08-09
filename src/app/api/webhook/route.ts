@@ -46,7 +46,7 @@ export async function POST(req:Request){
                         name: session.customer_details?.name!,
                         city: shippingAddress?.city!,
                         country: shippingAddress?.country!,
-                        postalCode: shippingAddress?.postal_code!,
+                        postalCode: shippingAddress?.postal_code || '',
                         street: shippingAddress?.line1!,
                         state: shippingAddress?.state
                     }
@@ -56,7 +56,7 @@ export async function POST(req:Request){
                         name: session.customer_details?.name!,
                         city: billingAddress?.city!,
                         country: billingAddress?.country!,
-                        postalCode: billingAddress?.postal_code!,
+                        postalCode: billingAddress?.postal_code || '',
                         street: billingAddress?.line1!,
                         state: billingAddress?.state
                     }
