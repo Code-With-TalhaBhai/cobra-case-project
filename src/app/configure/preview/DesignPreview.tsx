@@ -59,8 +59,6 @@ function DesignPreview({configuration}: {configuration:Configuration}) {
       checkoutPayment({configId:id})
     }
     else{
-      // console.log('user is',user)
-      console.log('handling handle checkout not login')
       localStorage.setItem('configurationId',id)
       setIsModalOpen(true)
     }

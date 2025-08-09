@@ -6,7 +6,6 @@ import Stripe from "stripe";
 
 export async function POST(req:Request){
     try {
-        console.log('webhook enter')
         const body = await req.text()
         const signature = headers().get('stripe-signature')
 
@@ -68,7 +67,6 @@ export async function POST(req:Request){
 
 
     } catch (error) {
-        console.log('webhook error',error)
         return Response.json({message: error,ok:false,status: 500})
     }
 }

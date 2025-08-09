@@ -180,7 +180,6 @@ const ConfiguratorDesign = ({configId,imageUrl,imageDimensions}: Props) => {
                 width: parseInt(ref.style.width.slice(0,-2)), // to extract px e.g 23px
                 height: parseInt(ref.style.height.slice(0,-2))
               })
-              // console.log('width: ',ref.style.width," height: ",ref.style.height)
               setRenderedPosition({x,y})
             }}
           className='absolute z-20 border-[3px] border-primary'

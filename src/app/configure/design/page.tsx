@@ -24,14 +24,6 @@ const Design = async({searchParams}: Props) => {
     return notFound()
   }
 
-  // dummy 
-  // const configuration = {
-  //   id: 'cm2haajpd0002vs3datsi2z90',
-  //   imgUrl: 'https://cobra-case-bucket.s3.amazonaws.com/ae1ded6d-bacc-47ef-8cfd-923fd88b9f2a}',
-  //   width: 1366,
-  //   height: 768
-  // }
-
   const {width,height,imgUrl} : any = configuration 
 
   return <ConfiguatorDesign configId={configuration.id} imageDimensions={{width,height}} imageUrl={imgUrl}/>
